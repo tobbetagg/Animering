@@ -1,0 +1,48 @@
+<html>
+    <body>
+        <canvas id="duk" width="500" height="400" onmouseover="mouseHandler(event)"</canvas>
+        <script>
+            var c = document.getElementById("duk");
+            var ctx = c.getContext("2d")
+            var xMan = 100, yMan = 100, vxMan= 1, vyMan= 2;
+            var xMouse = 0, yMouse = 0;
+            function paintMan(x, y) {
+                //måla huvud
+                ctx.beginPath();
+                ctx.arc(x, y, 20, 0, 2*Math.PI);
+                ctx.fill()
+                //måla kropp
+                ctx.fillRect(x-10, y+19, 20, 40);
+            
+            }
+            
+            function mouseHandler(event) {
+                xMouse=event.clientX;
+                yMouse=event.clientY;
+            }
+            
+            function repaint(){
+                //sudda gubbe
+                ctx.clearRect(0, 0, 500, 400);
+                //Måla gubbe
+                paintMan(xMan, yMan);
+                //Måla musgubbe
+                paintMan(xMouse, yMouse);
+                //Flytta gubbe
+                xMan = xMan + vxMan;
+                yMan = yMan + vyMan;
+            
+                //studs mot golv
+                if(yMan + 59 > 400){
+                    vyMan = -2;
+                }
+                //studs mot tak
+               if(yMan -20 < 0){
+                    vyMan = 2;
+               }
+            }
+            //kallar på repaint 50 ggr i sekunden
+            window.setInterval(repaint,20);  
+        </script>
+    </body>
+</html>
